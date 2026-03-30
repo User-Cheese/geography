@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gambia — Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #e8d5b0; --earth: #c4956a; --bark: #6b3d1e; --ink: #1a1208;
+  --river: #3a7ca5; --river-light: #cce3f0; --leaf: #5a7a3a;
+  --sky: #f5ede0; --accent: #d4541a; --accent-light: #faeade;
+  --success: #3a7a4a; --success-bg: #e8f5ec;
+  --fail: #c0392b; --fail-bg: #fdecea;
+  --muted: #8a6a4a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Source Serif 4',Georgia,serif; background:var(--sky); color:var(--ink); min-height:100vh; }
+
+/* NAV */
+nav { background:var(--bark); color:var(--sand); display:flex; align-items:center; gap:0; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.15); }
+.nav-title { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; padding:0.8rem 1.5rem; border-right:1px solid rgba(232,213,176,0.2); white-space:nowrap; }
+.nav-tabs { display:flex; flex:1; }
+.nav-tab { padding:0.8rem 1.2rem; font-size:0.82rem; letter-spacing:0.05em; cursor:pointer; color:rgba(232,213,176,0.65); border:none; background:none; border-bottom:2px solid transparent; transition:all 0.15s; white-space:nowrap; }
+.nav-tab:hover { color:var(--sand); }
+.nav-tab.active { color:var(--sand); border-bottom-color:var(--earth); }
+.nav-progress { margin-left:auto; padding:0 1.2rem; font-size:0.78rem; color:rgba(232,213,176,0.6); white-space:nowrap; }
+
+/* LAYOUT */
+.page { max-width:860px; margin:0 auto; padding:2rem 1.2rem 4rem; }
+.section-view { display:none; }
+.section-view.active { display:block; }
+
+/* TYPOGRAPHY */
+h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); font-weight:900; color:var(--bark); line-height:1.1; }
+h2 { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--bark); margin-bottom:0.5rem; }
+h3 { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--bark); margin:1.2rem 0 0.4rem; }
+p { font-size:0.92rem; line-height:1.75; color:#3a2a18; margin-bottom:0.7rem; }
+strong { font-weight:400; color:var(--bark); }
+
+/* CARDS */
+.card { background:rgba(255,255,255,0.6); border:1px solid rgba(196,149,106,0.3); border-radius:6px; padding:1.4rem 1.6rem; margin-bottom:1.2rem; backdrop-filter:blur(3px); }
+.card.river { border-left:4px solid var(--river); }
+.card.warn { border-left:4px solid var(--accent); }
+.card.dark { background:var(--bark); color:var(--sand); border:none; }
+.card.dark p,.card.dark li { color:rgba(232,213,176,0.88); }
+.card.dark h2,.card.dark h3 { color:var(--sand); }
+.card-tag { display:inline-block; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; background:var(--earth); color:#fff; padding:0.18rem 0.5rem; border-radius:2px; margin-bottom:0.6rem; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+@media(max-width:620px){ .grid2,.grid3{ grid-template-columns:1fr; } }
+
+/* STAT ROWS */
+.stat { display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px dashed rgba(196,149,106,0.22); padding:0.28rem 0; font-size:0.86rem; }
+.stat:last-child { border:none; }
+.stat-label { color:var(--muted); }
+.stat-val { font-style:italic; color:var(--bark); }
+.stat-val.nl { color:var(--river); }
+
+/* SECTION HEADER */
+.sec-header { display:flex; align-items:center; gap:1rem; margin:2.5rem 0 1.2rem; }
+.sec-header h2 { margin:0; font-size:1.5rem; }
+.sec-line { flex:1; height:1px; background:linear-gradient(to right, var(--earth), transparent); }
+
+/* CALLOUT */
+.callout { background:var(--accent-light); border-left:3px solid var(--accent); border-radius:0 4px 4px 0; padding:0.8rem 1rem; margin:0.8rem 0; font-size:0.88rem; line-height:1.6; }
+.callout.info { background:var(--river-light); border-left-color:var(--river); }
+
+/* CYCLE */
+.cycle { display:flex; align-items:center; flex-wrap:wrap; gap:0.4rem; margin:0.8rem 0; }
+.cycle-step { background:rgba(90,122,58,0.12); border:1px solid rgba(90,122,58,0.3); border-radius:3px; padding:0.22rem 0.6rem; font-size:0.8rem; color:var(--leaf); }
+.cycle-arrow { color:var(--earth); font-size:0.9rem; }
+
+/* TABLE */
+.tbl { width:100%; border-collapse:collapse; font-size:0.84rem; margin:0.6rem 0; }
+.tbl th { background:var(--bark); color:var(--sand); padding:0.4rem 0.7rem; text-align:left; font-weight:400; font-family:'Playfair Display',serif; }
+.tbl td { padding:0.32rem 0.7rem; border-bottom:1px solid rgba(196,149,106,0.2); }
+.tbl tr:nth-child(even) td { background:rgba(196,149,106,0.06); }
+.tbl .hi { background:rgba(212,84,26,0.1) !important; font-style:italic; }
+
+/* FILL-IN-THE-BLANK */
+#study-view { }
+.study-header { margin-bottom:1.5rem; }
+.study-header h2 { margin-bottom:0.3rem; }
+.study-header p { font-size:0.85rem; color:var(--muted); }
+.study-score { display:flex; gap:10px; margin-bottom:1.5rem; font-size:0.85rem; }
+.chip { padding:3px 12px; border-radius:3px; }
+.chip.s { background:var(--success-bg); color:var(--success); }
+.chip.f { background:var(--fail-bg); color:var(--fail); }
+.chip.n { background:rgba(196,149,106,0.15); color:var(--muted); }
+
+.q-block { background:rgba(255,255,255,0.65); border:1px solid rgba(196,149,106,0.3); border-radius:6px; padding:1.2rem 1.4rem; margin-bottom:1rem; transition:border-color 0.2s; }
+.q-block.correct { border-color:var(--success); background:var(--success-bg); }
+.q-block.wrong { border-color:var(--fail); background:var(--fail-bg); }
+.q-num { font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:0.4rem; }
+.q-text { font-size:0.93rem; line-height:1.65; color:var(--ink); margin-bottom:0.7rem; }
+.blank-wrap { display:inline-flex; align-items:center; margin:0 2px; }
+.blank { border:none; border-bottom:2px solid var(--earth); background:transparent; font-family:'Source Serif 4',Georgia,serif; font-size:0.93rem; color:var(--ink); outline:none; padding:0 4px 1px; min-width:80px; width:auto; transition:border-color 0.2s; }
+.blank:focus { border-color:var(--bark); }
+.blank.ok { border-color:var(--success); color:var(--success); }
+.blank.bad { border-color:var(--fail); color:var(--fail); }
+.q-feedback { font-size:0.8rem; margin-top:0.5rem; min-height:1.1em; color:var(--muted); }
+.q-feedback.ok { color:var(--success); }
+.q-feedback.bad { color:var(--fail); }
+.correct-ans { font-weight:400; font-style:italic; }
+
+.study-controls { display:flex; gap:10px; margin-top:1.5rem; flex-wrap:wrap; }
+.btn { padding:8px 18px; border-radius:4px; border:1px solid rgba(196,149,106,0.5); font-family:'Source Serif 4',Georgia,serif; font-size:0.85rem; cursor:pointer; background:transparent; color:var(--ink); transition:all 0.15s; }
+.btn:hover { background:rgba(196,149,106,0.15); }
+.btn.primary { background:var(--bark); color:var(--sand); border-color:var(--bark); }
+.btn.primary:hover { background:#7a4a25; }
+
+.study-result { background:var(--bark); color:var(--sand); border-radius:6px; padding:1.4rem 1.6rem; margin-top:1.5rem; display:none; }
+.big-score { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:900; color:var(--earth); }
+.result-msg { font-size:0.9rem; color:rgba(232,213,176,0.85); margin-top:0.4rem; }
+
+ul.notes { list-style:none; padding:0; }
+ul.notes li { font-size:0.88rem; line-height:1.7; color:#3a2a18; padding-left:1rem; position:relative; }
+ul.notes li::before { content:'–'; color:var(--earth); position:absolute; left:0; }
+
+.hero { padding:2.5rem 0 1rem; margin-bottom:0.5rem; }
+.hero-sub { font-size:0.85rem; color:var(--muted); font-style:italic; margin-top:0.4rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-title">The Gambia</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchView('notes')">Notes</button>
+    <button class="nav-tab" onclick="switchView('study')">Fill-in-the-blank</button>
+  </div>
+  <div class="nav-progress" id="nav-progress"></div>
+</nav>
+
+<!-- ═══════════════════════════ NOTES VIEW ═══════════════════════════ -->
+<div id="notes-view" class="section-view active">
+<div class="page">
+
+  <div class="hero">
+    <h1>The Gambia</h1>
+    <div class="hero-sub">West Africa · Geography · Full study notes</div>
+  </div>
+
+  <!-- BASICS -->
+  <div class="sec-header"><h2>The Basics</h2><div class="sec-line"></div></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-tag">Geography</div>
+      <h3>Where is it?</h3>
+      <p>Gambia sits in West Africa and is <strong>completely surrounded by Senegal</strong> on all sides except the Atlantic coast. It is the <strong>smallest country on the African mainland</strong> — basically a thin strip of land on both sides of the Gambian River.</p>
+      <div class="stat"><span class="stat-label">Capital</span><span class="stat-val">Banjul</span></div>
+      <div class="stat"><span class="stat-label">Largest city</span><span class="stat-val">Serekunda</span></div>
+      <div class="stat"><span class="stat-label">Independence</span><span class="stat-val">From UK, 1965</span></div>
+    </div>
+    <div class="card river">
+      <div class="card-tag">River</div>
+      <h3>The Gambian River</h3>
+      <p>The country literally follows the river — it's why Gambia is shaped like a long thin strip. The river is critical for <strong>fishing, trading by boat</strong>, and historically was used to <strong>transport enslaved people</strong> to the coast.</p>
+      <p>Where the river meets the ocean it forms a <strong>delta</strong> — swamps and mangroves with rich wildlife (birds, fish).</p>
+    </div>
+  </div>
+
+  <!-- CLIMATE -->
+  <div class="sec-header"><h2>Climate &amp; Landscape</h2><div class="sec-line"></div></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-tag">Climate Aw</div>
+      <h3>Tropical Savannah</h3>
+      <p>Gambia has a <strong>tropical savannah climate (Aw)</strong>. This means it is <strong>always above 18°C</strong> — it never gets cold. There are two seasons:</p>
+      <div class="stat"><span class="stat-label">Rainy season</span><span class="stat-val">June – October</span></div>
+      <div class="stat"><span class="stat-label">Dry season</span><span class="stat-val">Rest of the year</span></div>
+      <p style="margin-top:0.7rem">In the dry season, winds sometimes blow in huge clouds of dust from the Sahara.</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Vegetation</div>
+      <h3>Two Types of Savannah</h3>
+      <div class="stat"><span class="stat-label">Park savannah</span><span class="stat-val">Dry · north of river</span></div>
+      <div class="stat"><span class="stat-label">Forest savannah</span><span class="stat-val">Less dry · south of river</span></div>
+      <p style="margin-top:0.7rem">There is <strong>less forest savannah now</strong> because of deforestation. This creates a dangerous cycle:</p>
+      <div class="cycle">
+        <span class="cycle-step">deforestation</span><span class="cycle-arrow">→</span>
+        <span class="cycle-step">less vegetation</span><span class="cycle-arrow">→</span>
+        <span class="cycle-step">less water vapour</span><span class="cycle-arrow">→</span>
+        <span class="cycle-step">drier climate</span><span class="cycle-arrow">→</span>
+        <span class="cycle-step">trees die</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEOPLE -->
+  <div class="sec-header"><h2>People &amp; Society</h2><div class="sec-line"></div></div>
+  <div class="grid3">
+    <div class="card">
+      <div class="card-tag">Population</div>
+      <h3>Demographics</h3>
+      <div class="stat"><span class="stat-label">Population</span><span class="stat-val">~3 million</span></div>
+      <div class="stat"><span class="stat-label">Density</span><span class="stat-val">240/km²</span></div>
+      <div class="stat"><span class="stat-label">Average age</span><span class="stat-val">Under 25 years</span></div>
+      <div class="stat"><span class="stat-label">Children/woman</span><span class="stat-val">9 (average)</span></div>
+      <p style="margin-top:0.7rem;font-size:0.83rem">Gambia is the <strong>most densely populated African country</strong>. Population is growing fast and skews very young.</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Culture</div>
+      <h3>Ethnic Groups</h3>
+      <p>There are <strong>about 20 ethnic groups</strong>. The two biggest are the <strong>Mandika</strong> and the <strong>Fula</strong>.</p>
+      <p><strong>90% of people are Muslim</strong> — Islam is central to daily life and culture.</p>
+      <p>Almost everyone speaks <strong>English</strong> (colonial legacy from UK rule).</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Settlement</div>
+      <h3>Where People Live</h3>
+      <p>People prefer to live <strong>near the river or coast</strong> because:</p>
+      <ul class="notes">
+        <li>Water for crops</li>
+        <li>Easy to ship goods</li>
+        <li>Tourism is higher near water</li>
+      </ul>
+      <p style="margin-top:0.5rem">Most poverty is in <strong>rural areas</strong> away from the river.</p>
+    </div>
+  </div>
+
+  <!-- DEVELOPMENT -->
+  <div class="sec-header"><h2>Development &amp; HDI</h2><div class="sec-line"></div></div>
+  <div class="card">
+    <div class="card-tag">HDI explained</div>
+    <h3>What is HDI and why does it matter?</h3>
+    <p>HDI stands for <strong>Human Development Index</strong>. It measures how developed a country is — not just by money, but by the quality of life of its people. It looks at things like food security, clean water access, teachers per child, and life expectancy.</p>
+    <p>This is important because <strong>income alone doesn't tell the full story</strong>. A person might earn $5/day in Gambia and $50/day in the Netherlands — but $5 in Gambia doesn't buy the same things as $5 in the Netherlands. <strong>Income ≠ purchasing power</strong>, because prices are different in every country.</p>
+    <div class="callout info">GDP (Gross Domestic Product) = the total money a country makes from all its goods and services in a year. It's useful but imperfect — it measures country wealth, not individual people's wealth. A country can have high GDP while most citizens are still very poor.</div>
+  </div>
+  <div class="grid2">
+    <div class="card warn">
+      <div class="card-tag">Health</div>
+      <h3>Health Stats (Gambia vs Netherlands)</h3>
+      <div class="stat"><span class="stat-label">Life expectancy</span><span><span class="stat-val">65 yrs</span> &nbsp;vs&nbsp; <span class="stat-val nl">82 yrs (NL)</span></span></div>
+      <div class="stat"><span class="stat-label">Infant death rate</span><span><span class="stat-val">67‰</span> &nbsp;vs&nbsp; <span class="stat-val nl">3.6‰ (NL)</span></span></div>
+      <div class="stat"><span class="stat-label">Doctors</span><span class="stat-val">1 per 15,000 patients</span></div>
+      <p style="margin-top:0.8rem;font-size:0.83rem">The infant death rate is almost <strong>19× higher</strong> than the Netherlands. Access to basic healthcare is severely limited — and corruption makes it worse (e.g. blocking medicine shipments).</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Education</div>
+      <h3>Why Education Is Failing</h3>
+      <p>Gambia has <strong>no compulsory education up to age 18</strong>. Very few children reach higher education. Why?</p>
+      <ul class="notes">
+        <li>Too expensive for most families</li>
+        <li>Kids are needed on the farm to feed the family</li>
+        <li>No money = no school = stuck in agriculture = no money</li>
+      </ul>
+      <div class="callout" style="margin-top:0.8rem">This is a poverty trap — low education keeps people in low-income farming, which keeps them too poor to afford education.</div>
+    </div>
+  </div>
+
+  <!-- ECONOMY -->
+  <div class="sec-header"><h2>Economy</h2><div class="sec-line"></div></div>
+  <div class="card">
+    <div class="card-tag">Labour force</div>
+    <h3>The 3-Sector Model</h3>
+    <p>Every country's workforce can be split into 3 sectors. In general: <strong>less agriculture = more industry = more money</strong>. The Netherlands is almost entirely services. Gambia is the opposite.</p>
+    <table class="tbl">
+      <thead><tr><th>Sector</th><th>Gambia</th><th>Netherlands</th></tr></thead>
+      <tbody>
+        <tr><td>Agriculture</td><td class="hi">75%</td><td>~2%</td></tr>
+        <tr><td>Industry</td><td>19%</td><td>~17%</td></tr>
+        <tr><td>Services</td><td>6%</td><td>~80%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid2">
+    <div class="card warn">
+      <div class="card-tag">Exports</div>
+      <h3>Peanuts &amp; Monoculture Risk</h3>
+      <p>Gambia mainly exports <strong>peanuts and peanut products</strong>. Also: fishing, tourism.</p>
+      <p>The big problem: this is <strong>monoculture</strong> — relying on one crop. This is extremely risky because:</p>
+      <ul class="notes">
+        <li>If peanut prices drop globally → no income</li>
+        <li>If the harvest fails → famine and starvation</li>
+        <li>No profit being made from exports currently</li>
+      </ul>
+      <p style="margin-top:0.6rem">Most farmers are <strong>subsistence farmers</strong> — they eat their own crops rather than selling them. They're poor, not exporting much.</p>
+    </div>
+    <div class="card dark">
+      <div class="card-tag">World system</div>
+      <h3>Where Does Gambia Fit?</h3>
+      <p>The world is divided into three tiers:</p>
+      <table class="tbl" style="margin-top:0.5rem">
+        <thead><tr><th>1st world</th><th>2nd world</th><th>3rd world</th></tr></thead>
+        <tbody>
+          <tr><td>Core country</td><td>Semi-periphery</td><td style="font-style:italic;color:#e8a070">Periphery ← Gambia</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:0.8rem;font-size:0.84rem">Core countries (like NL) are wealthy, industrialised, and powerful. Periphery countries like Gambia are poor, dependent on agriculture, and economically exploited by or dependent on core countries.</p>
+    </div>
+  </div>
+
+  <!-- BASIC NEEDS -->
+  <div class="sec-header"><h2>Basic Needs &amp; Poverty</h2><div class="sec-line"></div></div>
+  <div class="card">
+    <div class="card-tag">Poverty</div>
+    <h3>Why Basic Needs Matter</h3>
+    <p>The basic needs for human life are: <strong>food, water, shelter, healthcare, and education</strong>. If a country cannot provide these affordably, everyone lives in poverty — regardless of what the GDP number says.</p>
+    <div class="grid2" style="margin-top:0.8rem">
+      <div>
+        <div class="stat"><span class="stat-label">People in poverty</span><span class="stat-val">50%</span></div>
+        <div class="stat"><span class="stat-label">Poverty location</span><span class="stat-val">Mostly rural</span></div>
+        <div class="stat"><span class="stat-label">People reaching age 70</span><span class="stat-val">Only 2%</span></div>
+      </div>
+      <div>
+        <p style="font-size:0.86rem">Gambia is <strong>one of the poorest countries in the world</strong>. Corruption makes it worse — for example, the government has blocked medicine shipments coming in from other countries.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="sec-header"><h2>Colonial History</h2><div class="sec-line"></div></div>
+  <div class="card">
+    <div class="card-tag">1400s–1965</div>
+    <h3>From Trade to Slavery to Independence</h3>
+    <p>Around <strong>1400–1500</strong>, Europeans arrived in West Africa mainly for trade. They exchanged gold, ivory, pepper — and eventually people. Within about 100 years, the transatlantic slave trade had begun. Europeans enslaved Africans and shipped them to the Americas — many through the Gambian River. Estimates suggest around <strong>12 million people were transported as slaves</strong>.</p>
+    <p>Europeans later tried to merge Gambia and Senegal into a single country called <strong>"Senegambia"</strong> — it never happened. The current borders were finalised around <strong>1980</strong> and follow the shape of the river. Gambia became independent from Britain in <strong>1965</strong>.</p>
+    <div class="callout">The reason Gambia has such a strange shape — a thin strip surrounded by Senegal — is because the colonial borders were drawn following the Gambian River. Britain controlled the river; France controlled everything else (Senegal).</div>
+  </div>
+
+</div><!-- end page -->
+</div><!-- end notes-view -->
+
+
+<!-- ═══════════════════════════ STUDY VIEW ═══════════════════════════ -->
+<div id="study-view" class="section-view">
+<div class="page">
+  <div class="study-header">
+    <h2>Fill in the blanks</h2>
+    <p>Type your answers and click Check. Partial credit counts. Case doesn't matter.</p>
+  </div>
+
+  <div class="study-score" id="score-chips">
+    <span class="chip n" id="chip-remain">30 questions</span>
+    <span class="chip s" id="chip-correct" style="display:none">Correct: 0</span>
+    <span class="chip f" id="chip-wrong" style="display:none">Wrong: 0</span>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div class="study-controls">
+    <button class="btn primary" onclick="checkAll()">Check answers</button>
+    <button class="btn" onclick="resetStudy()">Reset</button>
+    <button class="btn" onclick="switchView('notes')">← Back to notes</button>
+  </div>
+
+  <div class="study-result" id="result-box">
+    <div class="big-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn primary" onclick="resetStudy()">Try again</button>
+      <button class="btn" style="color:var(--sand);border-color:rgba(232,213,176,0.3)" onclick="switchView('notes')">Review notes</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+// ── view switching ──────────────────────────────────────────────────
+function switchView(v) {
+  document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(v+'-view').classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    if(t.textContent.toLowerCase().includes(v==='notes'?'note':'fill')) t.classList.add('active');
+  });
+  if(v==='study' && !studyBuilt) buildStudy();
+  window.scrollTo(0,0);
+}
+
+// ── questions data ──────────────────────────────────────────────────
+const QS = [
+  // Basics
+  { section:'The Basics',
+    text: 'The capital of Gambia is {Banjul} and the largest city is {Serekunda}.' },
+  { section:'The Basics',
+    text: 'Gambia is completely surrounded by {Senegal}, except for a short Atlantic coast.' },
+  { section:'The Basics',
+    text: 'Gambia became independent from the {UK} in {1965}.' },
+  { section:'The Basics',
+    text: 'Gambia is the {smallest} country on the African {mainland}.' },
+  { section:'The Basics',
+    text: 'The country follows the shape of the {Gambian River}, which is important for fishing and {trade} by boat.' },
+
+  // Climate
+  { section:'Climate & Landscape',
+    text: 'Gambia has a tropical savannah climate, coded as {Aw}. It is always above {18}°C.' },
+  { section:'Climate & Landscape',
+    text: 'The rainy season runs from {June} to {October}. The rest of the year is the dry season.' },
+  { section:'Climate & Landscape',
+    text: 'North of the river is {park} savannah (drier). South of the river is {forest} savannah (less dry).' },
+  { section:'Climate & Landscape',
+    text: 'Deforestation causes a feedback cycle: less vegetation → less {water vapour} → drier climate → {trees die}.' },
+
+  // People
+  { section:'People & Society',
+    text: 'Gambia has a population of about {3} million people, with a density of {240} people per km².' },
+  { section:'People & Society',
+    text: 'Gambia is the most {densely} populated African country.' },
+  { section:'People & Society',
+    text: 'The average age in Gambia is under {25} years, and the average number of children per woman is {9}.' },
+  { section:'People & Society',
+    text: 'Gambia has about {20} ethnic groups. The two biggest are {Mandika} and {Fula}.' },
+  { section:'People & Society',
+    text: '{90}% of Gambians follow Islam. Almost everyone speaks {English}.' },
+
+  // Development
+  { section:'Development & HDI',
+    text: 'HDI stands for Human {Development} Index and measures quality of life, not just income.' },
+  { section:'Development & HDI',
+    text: 'Income does not equal purchasing {power} because prices are different in every country.' },
+  { section:'Development & HDI',
+    text: 'GDP measures total country {wealth} from goods and services in a year, but it does not measure individual {wellbeing}.' },
+  { section:'Development & HDI',
+    text: 'Life expectancy in Gambia is {65} years, compared to {82} years in the Netherlands.' },
+  { section:'Development & HDI',
+    text: 'The infant death rate in Gambia is {67}‰, compared to {3.6}‰ in the Netherlands.' },
+  { section:'Development & HDI',
+    text: 'There is only {1} doctor per {15000} patients in Gambia.' },
+  { section:'Development & HDI',
+    text: 'Gambia has no compulsory {education} up to age 18. Children stay on {farms} to help feed their families instead.' },
+
+  // Economy
+  { section:'Economy',
+    text: 'In Gambia, {75}% of the workforce works in agriculture, {19}% in industry, and {6}% in services.' },
+  { section:'Economy',
+    text: 'The rule is: less {agriculture} = more industry = more {money}.' },
+  { section:'Economy',
+    text: 'Gambia mainly exports {peanuts} and peanut products. This is called {monoculture}.' },
+  { section:'Economy',
+    text: 'Monoculture is risky because if the {harvest} fails, there is starvation, and if global {prices} drop, there is no income.' },
+  { section:'Economy',
+    text: 'In the world system, the Netherlands is a {core} (1st world) country. Gambia is a {periphery} (3rd world) country.' },
+
+  // Poverty
+  { section:'Poverty & Basic Needs',
+    text: 'About {50}% of Gambians live in poverty, mostly in {rural} areas.' },
+  { section:'Poverty & Basic Needs',
+    text: 'Only {2}% of Gambians reach the age of {70}.' },
+  { section:'Poverty & Basic Needs',
+    text: 'The five basic needs for life are: food, {water}, shelter, {healthcare}, and education.' },
+
+  // History
+  { section:'Colonial History',
+    text: 'Around {1400}–1500, Europeans came to Africa mainly for trade: gold, {ivory}, pepper, and slaves.' },
+  { section:'Colonial History',
+    text: 'About {12} million people were transported as slaves, many through the {Gambian} River.' },
+  { section:'Colonial History',
+    text: 'Europeans tried to merge Gambia and Senegal into a country called {Senegambia}, but it never happened. Current borders were made around {1980}.' },
+];
+
+let studyBuilt = false;
+let checked = false;
+
+function buildStudy() {
+  studyBuilt = true;
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  let qNum = 0;
+  let currentSection = '';
+
+  QS.forEach((q, qi) => {
+    if(q.section !== currentSection) {
+      currentSection = q.section;
+      const sh = document.createElement('div');
+      sh.className = 'sec-header';
+      sh.style.marginTop = qNum===0 ? '0' : '2rem';
+      sh.innerHTML = `<h2 style="font-size:1.1rem">${q.section}</h2><div class="sec-line"></div>`;
+      container.appendChild(sh);
+    }
+    qNum++;
+
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'q-'+qi;
+
+    // parse blanks
+    const answers = [];
+    let html = q.text.replace(/\{([^}]+)\}/g, (_, ans) => {
+      const idx = answers.length;
+      answers.push(ans.toLowerCase().trim());
+      const w = Math.max(60, ans.length * 11);
+      return `<span class="blank-wrap"><input class="blank" data-qi="${qi}" data-bi="${idx}" style="width:${w}px" placeholder="..." spellcheck="false" onkeydown="handleKey(event)"></span>`;
+    });
+    block.dataset.answers = JSON.stringify(answers);
+
+    block.innerHTML = `
+      <div class="q-num">Question ${qNum}</div>
+      <div class="q-text">${html}</div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    container.appendChild(block);
+  });
+
+  document.getElementById('chip-remain').textContent = QS.length + ' questions';
+  updateProgress();
+}
+
+function handleKey(e) {
+  if(e.key==='Enter') checkAll();
+}
+
+function checkAll() {
+  checked = true;
+  let totalBlanks = 0, correctBlanks = 0;
+  let qCorrect = 0, qWrong = 0;
+
+  QS.forEach((q, qi) => {
+    const block = document.getElementById('q-'+qi);
+    if(!block) return;
+    const answers = JSON.parse(block.dataset.answers);
+    const inputs = block.querySelectorAll('.input, .blank');
+    const inputList = block.querySelectorAll('.blank');
+    let allRight = true;
+
+    answers.forEach((ans, bi) => {
+      const input = inputList[bi];
+      if(!input) return;
+      totalBlanks++;
+      const val = input.value.toLowerCase().trim();
+      const correct = isClose(val, ans);
+      input.classList.remove('ok','bad');
+      if(correct) {
+        input.classList.add('ok');
+        correctBlanks++;
+      } else {
+        input.classList.add('bad');
+        allRight = false;
+      }
+    });
+
+    block.classList.remove('correct','wrong');
+    const fb = document.getElementById('fb-'+qi);
+    if(allRight && answers.length > 0) {
+      block.classList.add('correct');
+      fb.className = 'q-feedback ok';
+      fb.textContent = 'Correct!';
+      qCorrect++;
+    } else {
+      block.classList.add('wrong');
+      fb.className = 'q-feedback bad';
+      const ans = answers.join(', ');
+      fb.innerHTML = `Answer${answers.length>1?'s':''}: <span class="correct-ans">${answers.join(' / ')}</span>`;
+      qWrong++;
+    }
+  });
+
+  document.getElementById('chip-correct').style.display='';
+  document.getElementById('chip-wrong').style.display='';
+  document.getElementById('chip-correct').textContent = 'Correct: '+qCorrect;
+  document.getElementById('chip-wrong').textContent = 'Wrong: '+qWrong;
+  document.getElementById('chip-remain').style.display='none';
+
+  const pct = Math.round(qCorrect/QS.length*100);
+  const rb = document.getElementById('result-box');
+  rb.style.display='block';
+  document.getElementById('result-score').textContent = pct + '%';
+  document.getElementById('result-msg').textContent = getMessage(pct, qCorrect, QS.length);
+  rb.scrollIntoView({behavior:'smooth', block:'nearest'});
+  updateProgress(qCorrect, QS.length);
+}
+
+function getMessage(pct, c, t) {
+  if(pct===100) return `Perfect score! ${c}/${t}. Gambia expert unlocked.`;
+  if(pct>=80) return `Solid. ${c}/${t} — go back over the ones you missed.`;
+  if(pct>=60) return `Not bad — ${c}/${t}. Review the notes and try again.`;
+  if(pct>=40) return `${c}/${t}. Read the notes again more carefully.`;
+  return `${c}/${t}. Go through the notes section by section before retrying.`;
+}
+
+function isClose(input, target) {
+  if(!input) return false;
+  if(input===target) return true;
+  // allow minor typos for longer answers
+  if(target.length > 5) {
+    if(target.includes(input) || input.includes(target)) return true;
+    if(levenshtein(input, target) <= Math.floor(target.length * 0.25)) return true;
+  }
+  return false;
+}
+
+function levenshtein(a, b) {
+  const m=a.length, n=b.length;
+  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+function resetStudy() {
+  checked = false;
+  studyBuilt = false;
+  document.getElementById('result-box').style.display='none';
+  document.getElementById('chip-remain').style.display='';
+  document.getElementById('chip-correct').style.display='none';
+  document.getElementById('chip-wrong').style.display='none';
+  buildStudy();
+  window.scrollTo(0,0);
+}
+
+function updateProgress(c, t) {
+  const el = document.getElementById('nav-progress');
+  if(c!==undefined) el.textContent = c+'/'+t+' correct';
+  else el.textContent = '';
+}
+</script>
+</body>
+</html>
